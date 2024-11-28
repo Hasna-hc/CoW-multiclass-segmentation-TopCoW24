@@ -1,0 +1,13 @@
+
+/evals
+/evals/*
+
+/nnunet_dir
+/nnunet_dir/*
+
+/to_delete
+/to_delete/*
+
+*.zip
+*.xml
+*.nii.gz

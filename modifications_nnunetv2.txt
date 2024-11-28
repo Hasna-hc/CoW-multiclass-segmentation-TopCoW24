@@ -1,0 +1,18 @@
+From nnUNetv2 installation,
+
+> Added the SkeletonRecallLoss parts:
+- /home/hasna/miccai24_challenges/topcow_challenge_final/nnUNet/nnunetv2/training/loss
+- /home/hasna/miccai24_challenges/topcow_challenge_final/nnUNet/nnunetv2/training/dataloading
+- /home/hasna/miccai24_challenges/topcow_challenge_final/nnUNet/nnunetv2/training/nnUNetTrainer/variants/loss
+- /home/hasna/miccai24_challenges/topcow_challenge_final/nnUNet/nnunetv2/training/nnUNetTrainer/variants/data_augmentation
+
+> Others:
+- /home/hasna/miccai24_challenges/topcow_challenge_final/nnUNet/nnunetv2/run/load_pretrained_weights.py
+
+
+> Training configs:
+- lr=1e-2 when it's from scratch, lr=1e-3 when it's from pretrained weights (but with SkeletonRecallLoss, etc)
+
+#TODO: Gather all pretrained weights in a single folder here..
+
+

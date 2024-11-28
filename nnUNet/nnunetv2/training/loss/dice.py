@@ -1,0 +1,421 @@
+from typing import Callable
+
+import torch
+from nnunetv2.utilities.ddp_allgather import AllGatherGrad
+from torch import nn
+
+
+class SoftDiceLoss(nn.Module):
+    def __init__(self, apply_nonlin: Callable = None, batch_dice: bool = False, do_bg: bool = True, smooth: float = 1.,
+                 ddp: bool = True, clip_tp: float = None):
+        """
+        """
+        super(SoftDiceLoss, self).__init__()
+
+        self.do_bg = do_bg
+        self.batch_dice = batch_dice
+        self.apply_nonlin = apply_nonlin
+        self.smooth = smooth
+        self.clip_tp = clip_tp
+        self.ddp = ddp
+
+    def forward(self, x, y, loss_mask=None):
+        shp_x = x.shape
+
+        if self.batch_dice:
+            axes = [0] + list(range(2, len(shp_x)))
+        else:
+            axes = list(range(2, len(shp_x)))
+
+        if self.apply_nonlin is not None:
+            x = self.apply_nonlin(x)
+
+        tp, fp, fn, _ = get_tp_fp_fn_tn(x, y, axes, loss_mask, False)
+
+        if self.ddp and self.batch_dice:
+            tp = AllGatherGrad.apply(tp).sum(0)
+            fp = AllGatherGrad.apply(fp).sum(0)
+            fn = AllGatherGrad.apply(fn).sum(0)
+
+        if self.clip_tp is not None:
+            tp = torch.clip(tp, min=self.clip_tp , max=None)
+
+        nominator = 2 * tp
+        denominator = 2 * tp + fp + fn
+
+        dc = (nominator + self.smooth) / (torch.clip(denominator + self.smooth, 1e-8))
+
+        if not self.do_bg:
+            if self.batch_dice:
+                dc = dc[1:]
+            else:
+                dc = dc[:, 1:]
+        dc = dc.mean()
+
+        return -dc
+
+
+class MemoryEfficientSoftDiceLoss(nn.Module):
+    def __init__(self, apply_nonlin: Callable = None, batch_dice: bool = False, do_bg: bool = True, smooth: float = 1.,
+                 ddp: bool = True):
+        """
+        saves 1.6 GB on Dataset017 3d_lowres
+        """
+        super(MemoryEfficientSoftDiceLoss, self).__init__()
+
+        self.do_bg = do_bg
+        self.batch_dice = batch_dice
+        self.apply_nonlin = apply_nonlin
+        self.smooth = smooth
+        self.ddp = ddp
+
+    def forward(self, x, y, loss_mask=None):
+        if self.apply_nonlin is not None:
+            x = self.apply_nonlin(x)
+
+        # make everything shape (b, c)
+        axes = tuple(range(2, x.ndim))
+
+        with torch.no_grad():
+            if x.ndim != y.ndim:
+                y = y.view((y.shape[0], 1, *y.shape[1:]))
+
+            if x.shape == y.shape:
+                # if this is the case then gt is probably already a one hot encoding
+                y_onehot = y
+            else:
+                y_onehot = torch.zeros(x.shape, device=x.device, dtype=torch.bool)
+                y_onehot.scatter_(1, y.long(), 1)
+
+            if not self.do_bg:
+                y_onehot = y_onehot[:, 1:]
+
+            sum_gt = y_onehot.sum(axes) if loss_mask is None else (y_onehot * loss_mask).sum(axes)
+
+        # this one MUST be outside the with torch.no_grad(): context. Otherwise no gradients for you
+        if not self.do_bg:
+            x = x[:, 1:]
+
+        if loss_mask is None:
+            intersect = (x * y_onehot).sum(axes)
+            sum_pred = x.sum(axes)
+        else:
+            intersect = (x * y_onehot * loss_mask).sum(axes)
+            sum_pred = (x * loss_mask).sum(axes)
+
+        if self.batch_dice:
+            if self.ddp:
+                intersect = AllGatherGrad.apply(intersect).sum(0)
+                sum_pred = AllGatherGrad.apply(sum_pred).sum(0)
+                sum_gt = AllGatherGrad.apply(sum_gt).sum(0)
+
+            intersect = intersect.sum(0)
+            sum_pred = sum_pred.sum(0)
+            sum_gt = sum_gt.sum(0)
+
+        dc = (2 * intersect + self.smooth) / (torch.clip(sum_gt + sum_pred + self.smooth, 1e-8))
+
+        dc = dc.mean()
+        return -dc
+
+
+class MemoryEfficientSoftBinDiceLoss_Original(nn.Module):  #FIXME: original one that was used in submissions
+    def __init__(self, apply_nonlin: Callable = None, batch_dice: bool = False, do_bg: bool = True, smooth: float = 1.,
+                 ddp: bool = True):
+        """
+        saves 1.6 GB on Dataset017 3d_lowres
+        """
+        super(MemoryEfficientSoftBinDiceLoss, self).__init__()
+
+        self.do_bg = do_bg
+        self.batch_dice = batch_dice
+        self.apply_nonlin = apply_nonlin
+        self.smooth = smooth
+        self.ddp = ddp
+
+    def forward(self, x, y, loss_mask=None):
+        if self.apply_nonlin is not None:
+            x = self.apply_nonlin(x)
+
+        # get the binary versions:        
+        # x = (1-x)[:,0,:,:,:]  #FIXME: #TODO:
+        # x = torch.unsqueeze(x, 1)
+        # y = 1*(y>0)
+
+        # x = 1 - x[:, 0, :, :, :]  # Inverting the background probability
+        # # Clamp to ensure values are between 0 and 1 to avoid NaN issues
+        # x = torch.clamp(x, min=0, max=1)
+        # # Add back the channel dimension
+        # x = torch.unsqueeze(x, 1)
+
+        # print('y before:', y.min(), y.max())  #FIXME:
+        y = (y > 0).float()  # Binarizing y
+        # print('y after:', y.min(), y.max())  #FIXME:
+
+        # print('x before:', x.min(), x.max())  #FIXME:
+
+        # x = x[:,0,:,:,:]
+        # x = (x < 0.5).float()  # Binarizing x
+        # x = torch.clamp(x, min=1e-8)
+        # # Ensure x has the right shape
+        # x = torch.unsqueeze(x, 1)
+
+        torch.autograd.set_detect_anomaly(True)
+        # x = x[:,0:2,:,:,:]
+        # x[:,1,:,:,:] = 1 - x[:,0,:,:,:]  # Binarizing x
+        x = x[:, 0:2, :, :, :]
+        x1 = x[:, 0, :, :, :]  # Get the first channel
+        x2 = 1 - x1  # Compute the second channel
+        x = torch.cat((x1.unsqueeze(1), x2.unsqueeze(1)), dim=1)  # Concatenate along the channel dimension
+
+        # x = torch.clamp(x, min=1e-8)
+        # # Ensure x has the right shape
+        # x = torch.unsqueeze(x, 1)
+        # print('x after:', x.min(), x.max())  #FIXME:
+        
+
+        # make everything shape (b, c)
+        axes = tuple(range(2, x.ndim))
+        # print('axes:', axes)  #FIXME:
+
+        with torch.no_grad():
+            if x.ndim != y.ndim:
+                y = y.view((y.shape[0], 1, *y.shape[1:]))
+
+            if x.shape == y.shape:
+                # if this is the case then gt is probably already a one hot encoding
+                y_onehot = y
+            else:
+                y_onehot = torch.zeros(x.shape, device=x.device, dtype=torch.bool)
+                y_onehot.scatter_(1, y.long(), 1)
+
+            if not self.do_bg:
+                y_onehot = y_onehot[:, 1:]
+
+            sum_gt = y_onehot.sum(axes) if loss_mask is None else (y_onehot * loss_mask).sum(axes)
+
+        # this one MUST be outside the with torch.no_grad(): context. Otherwise no gradients for you
+        if not self.do_bg:
+            x = x[:, 1:]
+
+        if loss_mask is None:
+            intersect = (x * y_onehot).sum(axes)
+            sum_pred = x.sum(axes)
+        else:
+            intersect = (x * y_onehot * loss_mask).sum(axes)
+            sum_pred = (x * loss_mask).sum(axes)
+
+        if self.batch_dice:
+            if self.ddp:
+                intersect = AllGatherGrad.apply(intersect).sum(0)
+                sum_pred = AllGatherGrad.apply(sum_pred).sum(0)
+                sum_gt = AllGatherGrad.apply(sum_gt).sum(0)
+
+            intersect = intersect.sum(0)
+            sum_pred = sum_pred.sum(0)
+            sum_gt = sum_gt.sum(0)
+
+        # print('intersect', intersect)
+        # print('sum_gt', sum_gt)
+        # print('sum_pred', sum_pred)
+        dc = (2 * intersect + self.smooth) / (torch.clip(sum_gt + sum_pred + self.smooth, 1e-8))
+        # print('dc:', dc)  #FIXME:
+        dc = dc.mean()
+        # print('dc mean:', dc)  #FIXME:
+        return -dc
+
+
+class MemoryEfficientSoftBinDiceLoss(nn.Module):
+    def __init__(self, apply_nonlin: Callable = None, batch_dice: bool = False, do_bg: bool = False, smooth: float = 1.,
+                 ddp: bool = True):
+        """
+        Computes the binary Dice loss by treating all non-background classes as a single foreground.
+        
+        Parameters:
+        - apply_nonlin: Non-linearity function (e.g., softmax).
+        - batch_dice: If True, computes Dice loss over the entire batch.
+        - do_bg: If False, excludes background class from the computation.
+        - smooth: Smoothing factor to avoid division by zero.
+        - ddp: If True, applies distributed data parallel gathering for multi-GPU training.
+        """
+        super(MemoryEfficientSoftBinDiceLoss, self).__init__()
+        self.do_bg = do_bg
+        self.batch_dice = batch_dice
+        self.apply_nonlin = apply_nonlin
+        self.smooth = smooth
+        self.ddp = ddp
+
+    def forward(self, x, y, loss_mask=None):
+        if self.apply_nonlin is not None:
+            x = self.apply_nonlin(x)
+
+        # make everything shape (b, 1)
+        axes = tuple(range(2, x.ndim))
+
+        with torch.no_grad():
+            if x.ndim != y.ndim:
+                y = y.view((y.shape[0], 1, *y.shape[1:]))
+
+            # Convert the multiclass ground truth to a binary mask (1 for any class, 0 for background)
+            y_binary = (y > 0).float()
+
+            # For the prediction, treat all non-background probabilities as a single foreground
+            x_binary = x[:, 1:].sum(dim=1, keepdim=True) if not self.do_bg else x.sum(dim=1, keepdim=True)
+
+        # this one MUST be outside the with torch.no_grad(): context. Otherwise no gradients for you
+        if loss_mask is None:
+            intersect = (x_binary * y_binary).sum(axes)
+            sum_pred = x_binary.sum(axes)
+            sum_gt = y_binary.sum(axes)
+        else:
+            intersect = (x_binary * y_binary * loss_mask).sum(axes)
+            sum_pred = (x_binary * loss_mask).sum(axes)
+            sum_gt = (y_binary * loss_mask).sum(axes)
+
+        if self.batch_dice:
+            if self.ddp:
+                intersect = AllGatherGrad.apply(intersect).sum(0)
+                sum_pred = AllGatherGrad.apply(sum_pred).sum(0)
+                sum_gt = AllGatherGrad.apply(sum_gt).sum(0)
+
+            intersect = intersect.sum(0)
+            sum_pred = sum_pred.sum(0)
+            sum_gt = sum_gt.sum(0)
+
+        # Compute the Dice coefficient
+        dc = (2 * intersect + self.smooth) / (torch.clamp(sum_gt + sum_pred + self.smooth, min=1e-8))
+
+        # Return the mean dice loss (negative because we minimize)
+        dc = dc.mean()
+        return -dc
+    
+
+
+class SoftSkeletonRecallLoss(nn.Module):  #FIXME: TODO: Added the SkeletonRecallLoss
+    def __init__(self, apply_nonlin: Callable = None, batch_dice: bool = False, do_bg: bool = True, smooth: float = 1.,
+                 ddp: bool = True):
+        """
+        saves 1.6 GB on Dataset017 3d_lowres
+        """
+        super(SoftSkeletonRecallLoss, self).__init__()
+
+        if do_bg:
+            raise RuntimeError("skeleton recall does not work with background")
+        self.batch_dice = batch_dice
+        self.apply_nonlin = apply_nonlin
+        self.smooth = smooth
+        self.ddp = ddp
+
+    def forward(self, x, y, loss_mask=None):
+        shp_x, shp_y = x.shape, y.shape
+
+        if self.apply_nonlin is not None:
+            x = self.apply_nonlin(x)
+
+        x = x[:, 1:]
+
+        # make everything shape (b, c)
+        axes = list(range(2, len(shp_x)))
+
+        with torch.no_grad():
+            if len(shp_x) != len(shp_y):
+                y = y.view((shp_y[0], 1, *shp_y[1:]))
+
+            if all([i == j for i, j in zip(shp_x, shp_y)]):
+                # if this is the case then gt is probably already a one hot encoding
+                y_onehot = y[:, 1:]
+            else:
+                gt = y.long()
+                y_onehot = torch.zeros(shp_x, device=x.device, dtype=y.dtype)
+                y_onehot.scatter_(1, gt, 1)
+                y_onehot = y_onehot[:, 1:]
+    
+            sum_gt = y_onehot.sum(axes) if loss_mask is None else (y_onehot * loss_mask).sum(axes)
+
+        inter_rec = (x * y_onehot).sum(axes) if loss_mask is None else (x * y_onehot * loss_mask).sum(axes)
+
+        if self.ddp and self.batch_dice:
+            inter_rec = AllGatherGrad.apply(inter_rec).sum(0)
+            sum_gt = AllGatherGrad.apply(sum_gt).sum(0)
+
+        if self.batch_dice:
+            inter_rec = inter_rec.sum(0)
+            sum_gt = sum_gt.sum(0)
+
+        rec = (inter_rec + self.smooth) / (torch.clip(sum_gt+self.smooth, 1e-8))
+
+        rec = rec.mean()
+        return -rec
+
+
+def get_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
+    """
+    net_output must be (b, c, x, y(, z)))
+    gt must be a label map (shape (b, 1, x, y(, z)) OR shape (b, x, y(, z))) or one hot encoding (b, c, x, y(, z))
+    if mask is provided it must have shape (b, 1, x, y(, z)))
+    :param net_output:
+    :param gt:
+    :param axes: can be (, ) = no summation
+    :param mask: mask must be 1 for valid pixels and 0 for invalid pixels
+    :param square: if True then fp, tp and fn will be squared before summation
+    :return:
+    """
+    if axes is None:
+        axes = tuple(range(2, net_output.ndim))
+
+    with torch.no_grad():
+        if net_output.ndim != gt.ndim:
+            gt = gt.view((gt.shape[0], 1, *gt.shape[1:]))
+
+        if net_output.shape == gt.shape:
+            # if this is the case then gt is probably already a one hot encoding
+            y_onehot = gt
+        else:
+            y_onehot = torch.zeros(net_output.shape, device=net_output.device, dtype=torch.bool)
+            y_onehot.scatter_(1, gt.long(), 1)
+
+    tp = net_output * y_onehot
+    fp = net_output * (~y_onehot)
+    fn = (1 - net_output) * y_onehot
+    tn = (1 - net_output) * (~y_onehot)
+
+    if mask is not None:
+        with torch.no_grad():
+            mask_here = torch.tile(mask, (1, tp.shape[1], *[1 for _ in range(2, tp.ndim)]))
+        tp *= mask_here
+        fp *= mask_here
+        fn *= mask_here
+        tn *= mask_here
+        # benchmark whether tiling the mask would be faster (torch.tile). It probably is for large batch sizes
+        # OK it barely makes a difference but the implementation above is a tiny bit faster + uses less vram
+        # (using nnUNetv2_train 998 3d_fullres 0)
+        # tp = torch.stack(tuple(x_i * mask[:, 0] for x_i in torch.unbind(tp, dim=1)), dim=1)
+        # fp = torch.stack(tuple(x_i * mask[:, 0] for x_i in torch.unbind(fp, dim=1)), dim=1)
+        # fn = torch.stack(tuple(x_i * mask[:, 0] for x_i in torch.unbind(fn, dim=1)), dim=1)
+        # tn = torch.stack(tuple(x_i * mask[:, 0] for x_i in torch.unbind(tn, dim=1)), dim=1)
+
+    if square:
+        tp = tp ** 2
+        fp = fp ** 2
+        fn = fn ** 2
+        tn = tn ** 2
+
+    if len(axes) > 0:
+        tp = tp.sum(dim=axes, keepdim=False)
+        fp = fp.sum(dim=axes, keepdim=False)
+        fn = fn.sum(dim=axes, keepdim=False)
+        tn = tn.sum(dim=axes, keepdim=False)
+
+    return tp, fp, fn, tn
+
+
+if __name__ == '__main__':
+    from nnunetv2.utilities.helpers import softmax_helper_dim1
+    pred = torch.rand((2, 3, 32, 32, 32))
+    ref = torch.randint(0, 3, (2, 32, 32, 32))
+
+    dl_old = SoftDiceLoss(apply_nonlin=softmax_helper_dim1, batch_dice=True, do_bg=False, smooth=0, ddp=False)
+    dl_new = MemoryEfficientSoftDiceLoss(apply_nonlin=softmax_helper_dim1, batch_dice=True, do_bg=False, smooth=0, ddp=False)
+    res_old = dl_old(pred, ref)
+    res_new = dl_new(pred, ref)
+    print(res_old, res_new)
