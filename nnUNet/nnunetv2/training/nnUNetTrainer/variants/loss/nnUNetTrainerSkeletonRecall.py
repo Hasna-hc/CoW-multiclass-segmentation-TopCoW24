@@ -55,7 +55,8 @@ class nnUNetTrainerSkeletonRecall(nnUNetTrainer):
                                                         'smooth': 1e-5, 'do_bg': False, 'ddp': self.is_ddp}, 
                                       soft_skelrec_kwargs={'batch_dice': self.configuration_manager.batch_dice,
                                                            'smooth': 1e-5, 'do_bg': False, 'ddp': self.is_ddp}, 
-                                      ce_kwargs={}, weight_ce=0.5, weight_dice=0.5, weight_srec=self.weight_srec, #FIXME: modified weights from 1 to 0.5
+                                      # ce_kwargs={}, weight_ce=0.5, weight_dice=0.5, weight_srec=self.weight_srec, #FIXME: modified weights from 1 to 0.5
+                                      ce_kwargs={}, weight_ce=1, weight_dice=1, weight_srec=self.weight_srec, #FIXME: original
                                       ignore_label=self.label_manager.ignore_label, dice_class=MemoryEfficientSoftDiceLoss)
 
         if self.enable_deep_supervision:

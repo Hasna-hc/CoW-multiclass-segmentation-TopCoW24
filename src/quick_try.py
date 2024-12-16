@@ -14,10 +14,10 @@ from post_processings import *
 
 ''' 
 cmd:
-export PYTHONPATH=/home/hasna/miccai24_challenges/topcow_challenge_final
-export nnUNet_raw='/home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/dataset/nnUNet_raw'
-export nnUNet_preprocessed='/home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/dataset/preprocessed'
-export nnUNet_results='/home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models'
+export PYTHONPATH=/home/hasna/miccai24_challenges/topcow_challenge
+export nnUNet_raw='/home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/nnUNet_raw'
+export nnUNet_preprocessed='/home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/preprocessed'
+export nnUNet_results='/home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models'
 
 
 #TODO:  CTA   5 folds with SkeletonRecall + BinDice + NoMirror + With/Without PostProcessing
@@ -33,6 +33,8 @@ python /home/hasna/miccai24_challenges/topcow_challenge_final/src/quick_try.py -
 
 
 python /home/hasna/miccai24_challenges/topcow_challenge_final/src/quick_try.py --model_bin_path /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models/Dataset807_TopCoWSegBinCTAMRA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres_ps --input_images /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/dataset/nnUNet_raw/Dataset807_TopCoWSegBinCTAMRA/imagesTr --save_folder /home/hasna/miccai24_challenges/topcow_challenge_final/evals/cta_skr_bindice_nomir_5folds --mod 'ct' --gpu 0
+python /home/hasna/miccai24_challenges/topcow_challenge/src/quick_try.py --model_bin_path /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models/Dataset807_TopCoWSegBinCTAMRA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres_ps --input_images /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/nnUNet_raw/Dataset807_TopCoWSegBinCTAMRA/imagesTr --save_folder /home/hasna/miccai24_challenges/topcow_challenge/evals/mra_skr_bindice_nomir_5folds_binary_ctamra --mod 'mr' --gpu 0
+
 
 '''
 

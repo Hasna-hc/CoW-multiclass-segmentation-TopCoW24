@@ -147,7 +147,7 @@ class nnUNetTrainer(object):
                 if self.is_cascaded else None
 
         ### Some hyperparameters for you to fiddle with
-        self.initial_lr = 1e-3  #FIXME:  lr=1e-3 for 808 MRA MulSeg when using pretrained weights, and lr=1e-2 for the rest ?
+        self.initial_lr = 1e-2  #FIXME:  lr=1e-3 for 808 MRA MulSeg when using pretrained weights, and lr=1e-2 for the rest ?
         self.weight_decay = 3e-5
         self.oversample_foreground_percent = 0.7  #FIXME: was 0.33
         self.num_iterations_per_epoch = 250

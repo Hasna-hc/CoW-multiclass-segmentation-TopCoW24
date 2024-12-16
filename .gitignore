@@ -9,6 +9,12 @@ evals/*
 /to_delete
 /to_delete/*
 
+Dataset101_Mulseg/
+Dataset102_Binseg/
+
+src/__pycache__/*
+*.pyc
+
 *.zip
 *.xml
 *.nii.gz
