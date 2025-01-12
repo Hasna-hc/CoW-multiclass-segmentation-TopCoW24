@@ -1,4 +1,5 @@
 import os
+import json
 import torch
 import argparse
 import numpy as np
@@ -30,7 +31,16 @@ python /home/hasna/miccai24_challenges/topcow_challenge_final/src/crossval_postp
 # # # #FIXME: MRA-CROWN2023   5 folds with SkeletonRecall + BinDice + NoMirror + With/Without PostProcessing
 # # # python /home/hasna/miccai24_challenges/topcow_challenge_final/src/crossval_postprocess.py --model_bin_path /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models/Dataset802_TopCoWSegBinMRA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres --model_mul_path /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models/Dataset808_TopCoWSegMRA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres --input_images /home/hasna/datasets/TopCoW2024_Data_Release/CROWN23/imagesTr --preds_folder /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models/Dataset808_TopCoWSegMRA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres --save_folder /home/hasna/miccai24_challenges/topcow_challenge_final/evals/mra_crown23_skr_bindice_nomir_5folds --num_folds 5 --mod 'mr' --gpu 3
 
-python /home/hasna/miccai24_challenges/topcow_challenge/src/crossval_postprocess.py --model_bin_path /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models/Dataset802_TopCoWSegBinMRA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres --model_mul_path /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models/Dataset806_TopCoWSegCTAMRA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres_ps --input_images /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/nnUNet_raw/Dataset808_TopCoWSegMRA/imagesTr --preds_folder /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models/Dataset806_TopCoWSegCTAMRA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres_ps --save_folder /home/hasna/miccai24_challenges/topcow_challenge/evals/mra_skr_bindice_nomir_5folds_ctamra --num_folds 5 --mod 'mr' --gpu 2
+python /home/hasna/miccai24_challenges/topcow_challenge/src/crossval_postprocess.py --model_bin_path /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models/Dataset802_TopCoWSegBinMRA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres --model_mul_path /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models/Dataset806_TopCoWSegCTAMRA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres_ps --split_path /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/preprocessed/Dataset806_TopCoWSegCTAMRA/splits_final.json --input_images /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/nnUNet_raw/Dataset808_TopCoWSegMRA/imagesTr --preds_folder /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models/Dataset806_TopCoWSegCTAMRA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres_ps --save_folder /home/hasna/miccai24_challenges/topcow_challenge/evals/mra_skr_bindice_nomir_5folds_ctamra --num_folds 5 --mod 'mr' --gpu 2
+
+
+
+> CTA only: python /home/hasna/miccai24_challenges/topcow_challenge/src/crossval_postprocess.py --model_bin_path /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models/Dataset809_TopCoWSegBinCTA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres_1000epochs --model_mul_path /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models/Dataset815_TopCoWSegCTA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres_1000epochs --split_path /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/preprocessed/Dataset809_TopCoWSegBinCTA/splits_final.json --input_images /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/nnUNet_raw/Dataset809_TopCoWSegBinCTA/imagesTr --save_folder /home/hasna/miccai24_challenges/topcow_challenge/evals/CTA-only_bin809_mul815_skr-bindice_nomir_5folds_val-best --num_folds 5 --mod 'ct' --gpu 1
+
+>>> Final inferences:
+    > MRA: python /home/hasna/miccai24_challenges/topcow_challenge/src/crossval_postprocess.py --model_bin_path /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models/Dataset802_TopCoWSegBinMRA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres --model_mul_path /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models/Dataset808_TopCoWSegMRA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres_pretrained --split_path /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/preprocessed/Dataset808_TopCoWSegMRA/splits_final.json --input_images /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/nnUNet_raw/Dataset808_TopCoWSegMRA/imagesTr --save_folder /home/hasna/miccai24_challenges/topcow_challenge/evals/final_MRA_bin802_mul808_skr-bindice_nomir_5folds_val-best --num_folds 5 --mod 'mr' --gpu 1
+    > CTA: python /home/hasna/miccai24_challenges/topcow_challenge/src/crossval_postprocess.py --model_bin_path /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models/Dataset809_TopCoWSegBinCTA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres_1000epochs --model_mul_path /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models/Dataset806_TopCoWSegCTAMRA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres_ps --split_path /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/preprocessed/Dataset809_TopCoWSegBinCTA/splits_final.json --input_images /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/nnUNet_raw/Dataset809_TopCoWSegBinCTA/imagesTr --save_folder /home/hasna/miccai24_challenges/topcow_challenge/evals/final_CTA_bin809_mul806_skr-bindice_nomir_5folds_val-best --num_folds 5 --mod 'ct' --gpu 1
+
 
 '''
 
@@ -38,8 +48,9 @@ python /home/hasna/miccai24_challenges/topcow_challenge/src/crossval_postprocess
 parser = argparse.ArgumentParser(description='Get all command line arguments.')
 parser.add_argument('--model_bin_path', type=str, required=True, help='Specify the path to the binary predictions')
 parser.add_argument('--model_mul_path', type=str, required=True, help='Specify the path to the multiclass model')
+parser.add_argument('--split_path', type=str, required=True, help='Specify the path to the splits json file')
 parser.add_argument('--input_images', type=str, default='', help='Specify the dir to al the input images')
-parser.add_argument('--preds_folder', type=str, default='', help='Specify the dir to al the preds per fold')
+# parser.add_argument('--preds_folder', type=str, default='', help='Specify the dir to al the preds per fold')
 parser.add_argument('--save_folder', type=str, default='', help='Specify the dir to al the trained models')
 parser.add_argument('--min_dist', type=float, default=15, help='Specify the minimum distance to link')
 parser.add_argument('--min_vol', type=float, default=20, help='Specify the minimum volume to remove')
@@ -77,6 +88,9 @@ def main(args):
     model_bin_path = args.model_bin_path #'/home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models/Dataset802_TopCoWSegBinMRA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres'
     model_mul_path = args.model_mul_path #'/home/hasna/miccai24_challenges/TopCoW_Algo_Submission/task-1-seg/nn_unet/nnUNet_results/Dataset801_TopCoWSegMRA/nnUNetTrainerSkeletonRecallBinDice__nnUNetPlans__3d_fullres'
 
+    with open(args.split_path, 'r') as file:
+        splits = json.load(file)
+
     predictor_bin = nnUNetPredictor(
         tile_step_size=0.5,
         use_gaussian=True,
@@ -113,9 +127,9 @@ def main(args):
             use_folds=(fold,),
             checkpoint_name='checkpoint_best.pth',
         )
-        for file in tqdm(natsorted(os.listdir(os.path.join(args.preds_folder, f'fold_{fold}/validation')))):
-            # if file.endswith('nii.gz'):
+        for file in tqdm(natsorted(splits[fold]['val'])):
             if file.startswith(f'topcow_{args.mod}_'):
+                file = file+'.nii.gz'
                 input_path = os.path.join(args.input_images, f"{file.split('.')[0]}_0000.nii.gz")
                 input_array, input_props = SimpleITKIO().read_images([input_path])  # Read input image with its properties
 
@@ -133,7 +147,7 @@ def main(args):
                 ## --- Postprocessing --- :
                 ## Step 1: Replace the BG voxels in multiclass pred & Delete the small disconnected volumes (<20 voxels)
                 pred_array_mul = replace_background_with_nearest_label(pred_array_mul, pred_array_bin)
-                cleaned_arr = clean_small_components(pred_array_mul)
+                cleaned_arr = clean_small_components(pred_array_mul, args.min_vol)
 
                 ## Step 2: Connect the disconnected components (linkin parts)
                 new_arr = np.zeros(cleaned_arr.shape)  # New array to store the modifications (bridges)

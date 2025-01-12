@@ -51,7 +51,7 @@ parser.add_argument('--interm_save', type=bool, default=False, help='Specify if 
 
 
 
-def main(args):    
+def main(args):
         
     ### Iterate over each input image for inference
     for fold in natsorted(os.listdir(os.path.join(args.save_folder, 'without_pp'))):
