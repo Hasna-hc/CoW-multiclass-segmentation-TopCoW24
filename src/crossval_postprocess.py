@@ -158,7 +158,7 @@ def main(args):
                     _, nums = label(binary_image)
 
                     if nums > 1:  # If for that specific label, there are more than 1 component (thus, disconnexions)
-                        dilated = link_components(binary_image, cleaned_arr)  # Link between the two closest points of the two closest components by dilating the line connecting them and multiply it by their class label
+                        dilated = link_components(binary_image, cleaned_arr)  # Link between the two closest points of the two closest components by dilating the line connecting them and multiply it by their class label  # FIXME: remove the clean_arr, it's useless
                         dilated_corrected = 1*( (dilated - 1*(cleaned_arr>0)) > 0)  # Get only the extra voxels to not interfere with what was originally there..
                         dilated_corrected = i*( (dilated_corrected - 1*(new_arr>0)) > 0)  # Get only the extra voxels to not interfere with what was previously dilated from other accumulated labels...
                         new_arr += (dilated_corrected.astype(np.uint8))
