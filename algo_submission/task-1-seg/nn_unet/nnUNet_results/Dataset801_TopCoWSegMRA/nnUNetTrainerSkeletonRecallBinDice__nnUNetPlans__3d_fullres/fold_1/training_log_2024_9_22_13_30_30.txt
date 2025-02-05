@@ -1,0 +1,26 @@
+
+#######################################################################
+Please cite the following paper when using nnU-Net:
+Isensee, F., Jaeger, P. F., Kohl, S. A., Petersen, J., & Maier-Hein, K. H. (2021). nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation. Nature methods, 18(2), 203-211.
+#######################################################################
+ 
+2024-09-22 13:30:31.694486: Using torch.compile... 
+2024-09-22 13:30:33.835360: do_dummy_2d_data_aug: False 
+2024-09-22 13:30:33.836611: Using splits from existing split file: /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/preprocessed/Dataset801_TopCoWSegMRA/splits_final.json 
+2024-09-22 13:30:33.836840: The split file contains 5 splits. 
+2024-09-22 13:30:33.836880: Desired fold for training: 1 
+2024-09-22 13:30:33.836910: This split has 100 training and 25 validation cases. 
+
+This is the configuration used by this training:
+Configuration name: 3d_fullres
+ {'data_identifier': 'nnUNetPlans_3d_fullres', 'preprocessor_name': 'DefaultPreprocessor', 'batch_size': 2, 'patch_size': [64, 192, 160], 'median_image_size_in_voxels': [186.0, 577.0, 480.0], 'spacing': [0.5999994874000549, 0.296875, 0.296875], 'normalization_schemes': ['ZScoreNormalization'], 'use_mask_for_norm': [False], 'resampling_fn_data': 'resample_data_or_seg_to_shape', 'resampling_fn_seg': 'resample_data_or_seg_to_shape', 'resampling_fn_data_kwargs': {'is_seg': False, 'order': 3, 'order_z': 0, 'force_separate_z': None}, 'resampling_fn_seg_kwargs': {'is_seg': True, 'order': 1, 'order_z': 0, 'force_separate_z': None}, 'resampling_fn_probabilities': 'resample_data_or_seg_to_shape', 'resampling_fn_probabilities_kwargs': {'is_seg': False, 'order': 1, 'order_z': 0, 'force_separate_z': None}, 'architecture': {'network_class_name': 'dynamic_network_architectures.architectures.unet.PlainConvUNet', 'arch_kwargs': {'n_stages': 6, 'features_per_stage': [32, 64, 128, 256, 320, 320], 'conv_op': 'torch.nn.modules.conv.Conv3d', 'kernel_sizes': [[1, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3]], 'strides': [[1, 1, 1], [1, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]], 'n_conv_per_stage': [2, 2, 2, 2, 2, 2], 'n_conv_per_stage_decoder': [2, 2, 2, 2, 2], 'conv_bias': True, 'norm_op': 'torch.nn.modules.instancenorm.InstanceNorm3d', 'norm_op_kwargs': {'eps': 1e-05, 'affine': True}, 'dropout_op': None, 'dropout_op_kwargs': None, 'nonlin': 'torch.nn.LeakyReLU', 'nonlin_kwargs': {'inplace': True}, 'deep_supervision': False}, '_kw_requires_import': ['conv_op', 'norm_op', 'dropout_op', 'nonlin']}, 'batch_dice': True} 
+ 
+These are the global plan.json settings:
+ {'dataset_name': 'Dataset801_TopCoWSegMRA', 'plans_name': 'nnUNetPlans', 'original_median_spacing_after_transp': [0.5999994874000549, 0.296875, 0.296875], 'original_median_shape_after_transp': [186, 569, 480], 'image_reader_writer': 'SimpleITKIO', 'transpose_forward': [0, 1, 2], 'transpose_backward': [0, 1, 2], 'experiment_planner_used': 'ExperimentPlanner', 'label_manager': 'LabelManager', 'foreground_intensity_properties_per_channel': {'0': {'max': 187962.71875, 'mean': 1087.106201171875, 'median': 377.9938049316406, 'min': 38.00013732910156, 'percentile_00_5': 119.99526977539062, 'percentile_99_5': 71247.0078125, 'std': 7570.60546875}}} 
+ 
+2024-09-22 13:30:39.705855: unpacking dataset... 
+2024-09-22 13:30:44.507754: unpacking done... 
+2024-09-22 13:30:44.561767: Unable to plot network architecture: nnUNet_compile is enabled! 
+2024-09-22 13:30:44.624282:  
+2024-09-22 13:30:44.624735: Epoch 0 
+2024-09-22 13:30:44.625212: Current learning rate: 0.001 

@@ -1,0 +1,518 @@
+{
+    "channel_names": {
+        "0": "mra"
+    },
+    "dataset_name": "Dataset802_TopCoWSegBinMRA",
+    "description": "Binary CoW segmentation task using MRA, trained for all folds for the TopCoW2024 Challenge",
+    "file_ending": ".nii.gz",
+    "labels": {
+        "background": 0,
+        "cow": 1
+    },
+    "numTesting": 0,
+    "numTraining": 125,
+    "tensor_image_size": "3D",
+    "test": [],
+    "training": [
+        {
+            "image": "./imagesTr/topcow_mr_001.nii.gz",
+            "label": "./labelsTr/topcow_mr_001.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_002.nii.gz",
+            "label": "./labelsTr/topcow_mr_002.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_003.nii.gz",
+            "label": "./labelsTr/topcow_mr_003.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_004.nii.gz",
+            "label": "./labelsTr/topcow_mr_004.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_005.nii.gz",
+            "label": "./labelsTr/topcow_mr_005.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_006.nii.gz",
+            "label": "./labelsTr/topcow_mr_006.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_007.nii.gz",
+            "label": "./labelsTr/topcow_mr_007.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_008.nii.gz",
+            "label": "./labelsTr/topcow_mr_008.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_009.nii.gz",
+            "label": "./labelsTr/topcow_mr_009.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_010.nii.gz",
+            "label": "./labelsTr/topcow_mr_010.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_011.nii.gz",
+            "label": "./labelsTr/topcow_mr_011.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_012.nii.gz",
+            "label": "./labelsTr/topcow_mr_012.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_013.nii.gz",
+            "label": "./labelsTr/topcow_mr_013.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_014.nii.gz",
+            "label": "./labelsTr/topcow_mr_014.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_015.nii.gz",
+            "label": "./labelsTr/topcow_mr_015.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_016.nii.gz",
+            "label": "./labelsTr/topcow_mr_016.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_017.nii.gz",
+            "label": "./labelsTr/topcow_mr_017.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_018.nii.gz",
+            "label": "./labelsTr/topcow_mr_018.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_019.nii.gz",
+            "label": "./labelsTr/topcow_mr_019.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_020.nii.gz",
+            "label": "./labelsTr/topcow_mr_020.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_021.nii.gz",
+            "label": "./labelsTr/topcow_mr_021.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_022.nii.gz",
+            "label": "./labelsTr/topcow_mr_022.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_023.nii.gz",
+            "label": "./labelsTr/topcow_mr_023.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_024.nii.gz",
+            "label": "./labelsTr/topcow_mr_024.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_025.nii.gz",
+            "label": "./labelsTr/topcow_mr_025.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_026.nii.gz",
+            "label": "./labelsTr/topcow_mr_026.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_027.nii.gz",
+            "label": "./labelsTr/topcow_mr_027.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_028.nii.gz",
+            "label": "./labelsTr/topcow_mr_028.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_029.nii.gz",
+            "label": "./labelsTr/topcow_mr_029.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_030.nii.gz",
+            "label": "./labelsTr/topcow_mr_030.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_031.nii.gz",
+            "label": "./labelsTr/topcow_mr_031.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_032.nii.gz",
+            "label": "./labelsTr/topcow_mr_032.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_033.nii.gz",
+            "label": "./labelsTr/topcow_mr_033.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_034.nii.gz",
+            "label": "./labelsTr/topcow_mr_034.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_035.nii.gz",
+            "label": "./labelsTr/topcow_mr_035.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_036.nii.gz",
+            "label": "./labelsTr/topcow_mr_036.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_037.nii.gz",
+            "label": "./labelsTr/topcow_mr_037.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_038.nii.gz",
+            "label": "./labelsTr/topcow_mr_038.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_039.nii.gz",
+            "label": "./labelsTr/topcow_mr_039.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_040.nii.gz",
+            "label": "./labelsTr/topcow_mr_040.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_041.nii.gz",
+            "label": "./labelsTr/topcow_mr_041.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_042.nii.gz",
+            "label": "./labelsTr/topcow_mr_042.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_043.nii.gz",
+            "label": "./labelsTr/topcow_mr_043.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_044.nii.gz",
+            "label": "./labelsTr/topcow_mr_044.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_045.nii.gz",
+            "label": "./labelsTr/topcow_mr_045.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_046.nii.gz",
+            "label": "./labelsTr/topcow_mr_046.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_047.nii.gz",
+            "label": "./labelsTr/topcow_mr_047.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_048.nii.gz",
+            "label": "./labelsTr/topcow_mr_048.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_049.nii.gz",
+            "label": "./labelsTr/topcow_mr_049.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_050.nii.gz",
+            "label": "./labelsTr/topcow_mr_050.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_051.nii.gz",
+            "label": "./labelsTr/topcow_mr_051.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_052.nii.gz",
+            "label": "./labelsTr/topcow_mr_052.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_053.nii.gz",
+            "label": "./labelsTr/topcow_mr_053.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_054.nii.gz",
+            "label": "./labelsTr/topcow_mr_054.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_055.nii.gz",
+            "label": "./labelsTr/topcow_mr_055.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_056.nii.gz",
+            "label": "./labelsTr/topcow_mr_056.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_057.nii.gz",
+            "label": "./labelsTr/topcow_mr_057.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_058.nii.gz",
+            "label": "./labelsTr/topcow_mr_058.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_059.nii.gz",
+            "label": "./labelsTr/topcow_mr_059.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_060.nii.gz",
+            "label": "./labelsTr/topcow_mr_060.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_061.nii.gz",
+            "label": "./labelsTr/topcow_mr_061.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_062.nii.gz",
+            "label": "./labelsTr/topcow_mr_062.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_063.nii.gz",
+            "label": "./labelsTr/topcow_mr_063.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_064.nii.gz",
+            "label": "./labelsTr/topcow_mr_064.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_065.nii.gz",
+            "label": "./labelsTr/topcow_mr_065.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_066.nii.gz",
+            "label": "./labelsTr/topcow_mr_066.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_067.nii.gz",
+            "label": "./labelsTr/topcow_mr_067.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_068.nii.gz",
+            "label": "./labelsTr/topcow_mr_068.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_069.nii.gz",
+            "label": "./labelsTr/topcow_mr_069.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_070.nii.gz",
+            "label": "./labelsTr/topcow_mr_070.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_071.nii.gz",
+            "label": "./labelsTr/topcow_mr_071.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_072.nii.gz",
+            "label": "./labelsTr/topcow_mr_072.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_073.nii.gz",
+            "label": "./labelsTr/topcow_mr_073.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_074.nii.gz",
+            "label": "./labelsTr/topcow_mr_074.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_075.nii.gz",
+            "label": "./labelsTr/topcow_mr_075.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_076.nii.gz",
+            "label": "./labelsTr/topcow_mr_076.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_077.nii.gz",
+            "label": "./labelsTr/topcow_mr_077.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_078.nii.gz",
+            "label": "./labelsTr/topcow_mr_078.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_079.nii.gz",
+            "label": "./labelsTr/topcow_mr_079.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_080.nii.gz",
+            "label": "./labelsTr/topcow_mr_080.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_081.nii.gz",
+            "label": "./labelsTr/topcow_mr_081.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_082.nii.gz",
+            "label": "./labelsTr/topcow_mr_082.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_083.nii.gz",
+            "label": "./labelsTr/topcow_mr_083.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_084.nii.gz",
+            "label": "./labelsTr/topcow_mr_084.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_085.nii.gz",
+            "label": "./labelsTr/topcow_mr_085.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_086.nii.gz",
+            "label": "./labelsTr/topcow_mr_086.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_087.nii.gz",
+            "label": "./labelsTr/topcow_mr_087.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_088.nii.gz",
+            "label": "./labelsTr/topcow_mr_088.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_089.nii.gz",
+            "label": "./labelsTr/topcow_mr_089.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_090.nii.gz",
+            "label": "./labelsTr/topcow_mr_090.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_131.nii.gz",
+            "label": "./labelsTr/topcow_mr_131.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_132.nii.gz",
+            "label": "./labelsTr/topcow_mr_132.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_133.nii.gz",
+            "label": "./labelsTr/topcow_mr_133.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_134.nii.gz",
+            "label": "./labelsTr/topcow_mr_134.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_135.nii.gz",
+            "label": "./labelsTr/topcow_mr_135.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_136.nii.gz",
+            "label": "./labelsTr/topcow_mr_136.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_137.nii.gz",
+            "label": "./labelsTr/topcow_mr_137.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_138.nii.gz",
+            "label": "./labelsTr/topcow_mr_138.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_139.nii.gz",
+            "label": "./labelsTr/topcow_mr_139.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_140.nii.gz",
+            "label": "./labelsTr/topcow_mr_140.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_141.nii.gz",
+            "label": "./labelsTr/topcow_mr_141.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_142.nii.gz",
+            "label": "./labelsTr/topcow_mr_142.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_143.nii.gz",
+            "label": "./labelsTr/topcow_mr_143.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_144.nii.gz",
+            "label": "./labelsTr/topcow_mr_144.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_145.nii.gz",
+            "label": "./labelsTr/topcow_mr_145.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_146.nii.gz",
+            "label": "./labelsTr/topcow_mr_146.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_147.nii.gz",
+            "label": "./labelsTr/topcow_mr_147.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_148.nii.gz",
+            "label": "./labelsTr/topcow_mr_148.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_149.nii.gz",
+            "label": "./labelsTr/topcow_mr_149.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_150.nii.gz",
+            "label": "./labelsTr/topcow_mr_150.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_151.nii.gz",
+            "label": "./labelsTr/topcow_mr_151.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_152.nii.gz",
+            "label": "./labelsTr/topcow_mr_152.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_153.nii.gz",
+            "label": "./labelsTr/topcow_mr_153.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_154.nii.gz",
+            "label": "./labelsTr/topcow_mr_154.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_155.nii.gz",
+            "label": "./labelsTr/topcow_mr_155.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_156.nii.gz",
+            "label": "./labelsTr/topcow_mr_156.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_157.nii.gz",
+            "label": "./labelsTr/topcow_mr_157.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_158.nii.gz",
+            "label": "./labelsTr/topcow_mr_158.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_159.nii.gz",
+            "label": "./labelsTr/topcow_mr_159.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_160.nii.gz",
+            "label": "./labelsTr/topcow_mr_160.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_161.nii.gz",
+            "label": "./labelsTr/topcow_mr_161.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_162.nii.gz",
+            "label": "./labelsTr/topcow_mr_162.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_163.nii.gz",
+            "label": "./labelsTr/topcow_mr_163.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_164.nii.gz",
+            "label": "./labelsTr/topcow_mr_164.nii.gz"
+        },
+        {
+            "image": "./imagesTr/topcow_mr_165.nii.gz",
+            "label": "./labelsTr/topcow_mr_165.nii.gz"
+        }
+    ]
+}

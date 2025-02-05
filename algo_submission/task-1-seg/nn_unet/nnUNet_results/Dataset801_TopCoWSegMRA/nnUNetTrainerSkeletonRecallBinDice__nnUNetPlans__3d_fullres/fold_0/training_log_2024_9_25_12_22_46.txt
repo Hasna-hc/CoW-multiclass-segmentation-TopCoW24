@@ -1,0 +1,63 @@
+
+#######################################################################
+Please cite the following paper when using nnU-Net:
+Isensee, F., Jaeger, P. F., Kohl, S. A., Petersen, J., & Maier-Hein, K. H. (2021). nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation. Nature methods, 18(2), 203-211.
+#######################################################################
+ 
+2024-09-25 12:22:47.922423: Using torch.compile... 
+2024-09-25 12:22:51.757448: Using splits from existing split file: /home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/preprocessed/Dataset801_TopCoWSegMRA/splits_final.json 
+2024-09-25 12:22:51.758143: The split file contains 5 splits. 
+2024-09-25 12:22:51.758211: Desired fold for training: 0 
+2024-09-25 12:22:51.758258: This split has 100 training and 25 validation cases. 
+2024-09-25 12:22:51.758569: predicting topcow_mr_003 
+2024-09-25 12:22:51.762842: topcow_mr_003, shape torch.Size([1, 179, 566, 510]), rank 0 
+2024-09-25 12:24:27.595029: predicting topcow_mr_005 
+2024-09-25 12:24:27.627771: topcow_mr_005, shape torch.Size([1, 196, 566, 470]), rank 0 
+2024-09-25 12:25:46.851998: predicting topcow_mr_007 
+2024-09-25 12:25:47.431643: topcow_mr_007, shape torch.Size([1, 200, 552, 490]), rank 0 
+2024-09-25 12:27:25.256449: predicting topcow_mr_010 
+2024-09-25 12:27:25.273208: topcow_mr_010, shape torch.Size([1, 194, 542, 459]), rank 0 
+2024-09-25 12:28:46.360457: predicting topcow_mr_014 
+2024-09-25 12:28:46.412483: topcow_mr_014, shape torch.Size([1, 174, 622, 485]), rank 0 
+2024-09-25 12:30:20.581757: predicting topcow_mr_021 
+2024-09-25 12:30:20.597367: topcow_mr_021, shape torch.Size([1, 174, 576, 479]), rank 0 
+2024-09-25 12:31:32.007328: predicting topcow_mr_031 
+2024-09-25 12:31:32.042919: topcow_mr_031, shape torch.Size([1, 208, 546, 473]), rank 0 
+2024-09-25 12:33:08.901360: predicting topcow_mr_038 
+2024-09-25 12:33:08.936158: topcow_mr_038, shape torch.Size([1, 176, 561, 480]), rank 0 
+2024-09-25 12:34:49.721368: predicting topcow_mr_040 
+2024-09-25 12:34:49.764898: topcow_mr_040, shape torch.Size([1, 194, 597, 480]), rank 0 
+2024-09-25 12:37:04.275176: predicting topcow_mr_043 
+2024-09-25 12:37:04.324925: topcow_mr_043, shape torch.Size([1, 189, 572, 495]), rank 0 
+2024-09-25 12:39:00.844822: predicting topcow_mr_046 
+2024-09-25 12:39:00.886916: topcow_mr_046, shape torch.Size([1, 179, 531, 475]), rank 0 
+2024-09-25 12:40:34.250051: predicting topcow_mr_049 
+2024-09-25 12:40:34.280423: topcow_mr_049, shape torch.Size([1, 181, 567, 480]), rank 0 
+2024-09-25 12:42:10.623388: predicting topcow_mr_051 
+2024-09-25 12:42:10.957688: topcow_mr_051, shape torch.Size([1, 176, 589, 500]), rank 0 
+2024-09-25 12:44:21.972240: predicting topcow_mr_063 
+2024-09-25 12:44:22.001903: topcow_mr_063, shape torch.Size([1, 191, 536, 451]), rank 0 
+2024-09-25 12:45:59.628191: predicting topcow_mr_067 
+2024-09-25 12:45:59.668041: topcow_mr_067, shape torch.Size([1, 186, 577, 495]), rank 0 
+2024-09-25 12:48:31.977805: predicting topcow_mr_072 
+2024-09-25 12:48:31.988084: topcow_mr_072, shape torch.Size([1, 189, 525, 459]), rank 0 
+2024-09-25 12:50:07.569773: predicting topcow_mr_084 
+2024-09-25 12:50:07.603026: topcow_mr_084, shape torch.Size([1, 186, 635, 469]), rank 0 
+2024-09-25 12:51:59.933322: predicting topcow_mr_087 
+2024-09-25 12:51:59.961471: topcow_mr_087, shape torch.Size([1, 181, 562, 500]), rank 0 
+2024-09-25 12:53:52.511788: predicting topcow_mr_131 
+2024-09-25 12:53:52.646656: topcow_mr_131, shape torch.Size([1, 176, 562, 495]), rank 0 
+2024-09-25 12:55:45.666654: predicting topcow_mr_134 
+2024-09-25 12:55:45.723696: topcow_mr_134, shape torch.Size([1, 176, 583, 475]), rank 0 
+2024-09-25 12:57:41.813456: predicting topcow_mr_146 
+2024-09-25 12:57:41.844267: topcow_mr_146, shape torch.Size([1, 190, 577, 529]), rank 0 
+2024-09-25 12:59:52.799614: predicting topcow_mr_155 
+2024-09-25 12:59:52.837412: topcow_mr_155, shape torch.Size([1, 175, 546, 524]), rank 0 
+2024-09-25 13:01:47.369149: predicting topcow_mr_156 
+2024-09-25 13:01:47.407232: topcow_mr_156, shape torch.Size([1, 179, 636, 464]), rank 0 
+2024-09-25 13:03:37.982486: predicting topcow_mr_162 
+2024-09-25 13:03:38.031830: topcow_mr_162, shape torch.Size([1, 200, 580, 490]), rank 0 
+2024-09-25 13:06:11.794950: predicting topcow_mr_164 
+2024-09-25 13:06:11.841799: topcow_mr_164, shape torch.Size([1, 189, 623, 473]), rank 0 
+2024-09-25 13:12:18.438922: Validation complete 
+2024-09-25 13:12:18.439314: Mean Validation Dice:  0.7651759253050868 

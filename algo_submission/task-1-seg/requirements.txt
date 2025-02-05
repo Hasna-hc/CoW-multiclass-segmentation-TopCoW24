@@ -1,0 +1,32 @@
+acvl-utils==0.2
+argparse==1.4.0
+# batchgenerators==0.25
+batchgeneratorsv2==0.1.1
+blessed==1.20.0
+connected-components-3d==3.12.3
+dicom2nifti==2.4.9  #FIXME: was 2.4.8
+dynamic-network-architectures==0.3.1  # FIXME: was 0.2
+future==0.18.3
+gpustat==1.1.1
+hiddenlayer==0.2
+linecache2==1.0.0
+nibabel==5.1.0
+nnunetv2==2.1.2
+nvidia-ml-py==12.535.133  #FIXME: was 12.535.108
+pydicom==2.4.3
+python-gdcm==3.0.22
+SimpleITK==2.3.0
+traceback2==1.4.0
+unittest2==1.1.0
+yacs==0.1.8
+
+
+evalutils==0.4.2
+
+MedPy==0.4.0
+scikit-learn==1.2.1
+scipy==1.10.1
+scikit-image==0.19.3
+numpy==1.25.2
+pandas==1.4.3
+tqdm==4.48.2
