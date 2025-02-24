@@ -1,3 +1,2 @@
-# topcow_challenge  
+# topcow_challenge 2024 
 
-Using crossval_postprocess.py for the final metrics
