@@ -15,26 +15,10 @@ from post_processings import *
 
 '''
 cmd:
-export PYTHONPATH=/home/hasna/miccai24_challenges/topcow_challenge_final
-export nnUNet_raw='/home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/dataset/nnUNet_raw'
-export nnUNet_preprocessed='/home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/dataset/preprocessed'
-export nnUNet_results='/home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models'
-
-
-#FIXME: MRA-CROWN2023   5 folds with SkeletonRecall + BinDice + NoMirror + With/Without PostProcessing
-python /home/hasna/miccai24_challenges/topcow_challenge_final/src/inference_postprocess.py --model_bin_path /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models/Dataset802_TopCoWSegBinMRA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres --model_mul_path /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models/Dataset808_TopCoWSegMRA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres --input_images /home/hasna/datasets/TopCoW2024_Data_Release/CROWN23/imagesTr --save_folder /home/hasna/miccai24_challenges/topcow_challenge_final/evals/mra_crown23_skr_bindice_nomir_5folds --num_folds 5 --gpu 3
-
-#FIXME: MRA-CROWN2023   4 folds with SkeletonRecall + BinDice + NoMirror + With/Without PostProcessing (4 folds by removing the one with 0 in label 13)
-python /home/hasna/miccai24_challenges/topcow_challenge_final/src/inference_postprocess.py --model_bin_path /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models/Dataset802_TopCoWSegBinMRA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres --model_mul_path /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models/Dataset808_TopCoWSegMRA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres --input_images /home/hasna/datasets/TopCoW2024_Data_Release/CROWN23/imagesTr --save_folder /home/hasna/miccai24_challenges/topcow_challenge_final/evals/mra_crown23_skr_bindice_nomir_4folds --num_folds 4 --gpu 3
-
-#FIXME: MRA-Val   5 folds with SkeletonRecall + BinDice + NoMirror + With/Without PostProcessing 
-python /home/hasna/miccai24_challenges/topcow_challenge_final/src/inference_postprocess.py --model_bin_path /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models/Dataset802_TopCoWSegBinMRA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres --model_mul_path /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models/Dataset808_TopCoWSegMRA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres --input_images /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/dataset/nnUNet_raw/imagesVal --save_folder /home/hasna/miccai24_challenges/topcow_challenge_final/evals/mra_val_skr_bindice_nomir_5folds --num_folds 5 --gpu 3
-python /home/hasna/miccai24_challenges/topcow_challenge_final/src/inference_postprocess.py --model_bin_path /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models/Dataset802_TopCoWSegBinMRA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres --model_mul_path /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models/Dataset808_TopCoWSegMRA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres --input_images /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/dataset/nnUNet_raw/imagesVal --save_folder /home/hasna/miccai24_challenges/topcow_challenge_final/evals/mra_val_skr_bindice_nomir_5folds_intermediates --num_folds 5 --gpu 3 --interm_save True
-
-
-#FIXME: MRA-Val   4 folds with SkeletonRecall + BinDice + NoMirror + With/Without PostProcessing 
-python /home/hasna/miccai24_challenges/topcow_challenge_final/src/inference_postprocess.py --model_bin_path /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models/Dataset802_TopCoWSegBinMRA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres --model_mul_path /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/datasetnnUNet_trained_models/Dataset808_TopCoWSegMRA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres --input_images /home/hasna/miccai24_challenges/topcow_challenge_final/nnunet_dir/dataset/nnUNet_raw/imagesVal --save_folder /home/hasna/miccai24_challenges/topcow_challenge_final/evals/mra_val_skr_bindice_nomir_4folds_intermediates --num_folds 4 --gpu 3 --interm_save True
-
+export PYTHONPATH=/home/hasna/miccai24_challenges/topcow_challenge
+export nnUNet_raw='/home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/nnUNet_raw'
+export nnUNet_preprocessed='/home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/dataset/preprocessed'
+export nnUNet_results='/home/hasna/miccai24_challenges/topcow_challenge/nnunet_dir/datasetnnUNet_trained_models'
 '''
 
 ''' --------------------------------------------------------------- '''
@@ -106,8 +90,7 @@ def main(args):
     )
     predictor_mul.initialize_from_trained_model_folder(
         args.model_mul_path,
-        # use_folds=(0, 1, 2, 3, 4,),
-        use_folds=(0, 1, 3, 4,),
+        use_folds=(0, 1, 2, 3, 4,),
         checkpoint_name='checkpoint_best.pth',
     )
 

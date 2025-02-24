@@ -82,7 +82,7 @@ def run():
 def load_image_file(*, input_path):
     # Use SimpleITK to read a file
     input_file = (glob(str(input_path / "*.mha")) + glob(str(input_path / "*.nii.gz")))[0] # There is just one file in the input folder!
-    return sitk.ReadImage(input_file) 
+    return sitk.ReadImage(input_file)
 
 # def load_image_file_as_array(*, location):
 #     img = load_image_file(input_path=location)

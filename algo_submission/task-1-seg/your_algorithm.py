@@ -39,7 +39,7 @@ from post_processings import *
 #######################################################################################
 # TODO: 
 # Choose your TRACK. Track is either 'MR' or 'CT'.
-TRACK = 'MR' # or 'CT'
+TRACK = 'CT' # 'MR' or 'CT'  #TODO: #FIXME: MR or CT
 # END OF TODO
 #######################################################################################
 
@@ -60,7 +60,7 @@ def your_segmentation_algorithm(*, mr_input_array: np.array, mra_props, ct_input
     """
 
     #######################################################################################
-    # TODO: place your own prediction algorithm here.
+    # TODO place your own prediction algorithm here.
     # You are free to remove everything! Just return to us an npy in (x,y,z).
     # You can use the input_head_mr_angiography and/or input_head_ct_angiography
     # to make your prediction.
@@ -99,7 +99,7 @@ def your_segmentation_algorithm(*, mr_input_array: np.array, mra_props, ct_input
 
     ## Initialization of the Multiclass predictor
     predictor_mul = nnUNetPredictor(
-            tile_step_size=0.5,  #FIXME: was 0.5
+            tile_step_size=0.5,
             use_gaussian=True,
             use_mirroring=False,  #FIXME: was True
             perform_everything_on_device=True,
@@ -109,10 +109,11 @@ def your_segmentation_algorithm(*, mr_input_array: np.array, mra_props, ct_input
             allow_tqdm=False
         )
 
-    model_mul_path = 'nn_unet/nnUNet_results/Dataset801_TopCoWSegMRA/nnUNetTrainerSkeletonRecallBinDice__nnUNetPlans__3d_fullres'
+    # model_mul_path = 'nn_unet/nnUNet_results/Dataset808_TopCoWSegMRA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres'  # MRA
+    model_mul_path = 'nn_unet/nnUNet_results/Dataset806_TopCoWSegCTAMRA/nnUNetTrainerSkeletonRecallBinDiceNoMirroring__nnUNetPlans__3d_fullres_ps'  # CTA
     predictor_mul.initialize_from_trained_model_folder(
         model_mul_path,
-        use_folds=(0, 1),
+        use_folds=(0, 1, 2, 3, 4,),
         checkpoint_name='checkpoint_best.pth',
     )
 
@@ -128,12 +129,13 @@ def your_segmentation_algorithm(*, mr_input_array: np.array, mra_props, ct_input
     # patch_size = (160, 192, 64)
     # num_sw = calculate_sliding_windows(patch_size, pred_array_mul.shape)  # Check the number of patches needed for the sliwing-window
     # if num_sw <= 150:  # In this case, the image is not too big and the full post-processing can be applied (including the binary part..)
-    ## Initialization of the Binary predictor (1 single model)
-    model_bin_path = 'nn_unet/nnUNet_results/Dataset802_TopCoWSegBinMRA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres'
+    ## Initialization of the Binary predictor (1 single model) 
+    # model_bin_path = 'nn_unet/nnUNet_results/Dataset802_TopCoWSegBinMRA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres'  # MRA
+    model_bin_path = 'nn_unet/nnUNet_results/Dataset807_TopCoWSegBinCTAMRA/nnUNetTrainerSkeletonRecall__nnUNetPlans__3d_fullres_ps'  # CTA
     predictor_bin = nnUNetPredictor(
-        tile_step_size=0.5,  #FIXME: was originally 0.5  TODO: was 0.6
+        tile_step_size=0.5,
         use_gaussian=True,
-        use_mirroring=True,  #FIXME: was originally True
+        use_mirroring=True,
         perform_everything_on_device=True,
         device=torch.device('cuda', 0),
         verbose=False,
@@ -147,18 +149,19 @@ def your_segmentation_algorithm(*, mr_input_array: np.array, mra_props, ct_input
     )
     pred_array_bin = predictor_bin.predict_single_npy_array(input_array, input_props)
     pred_array_bin = pred_array_bin.transpose((2, 1, 0)).astype(np.uint8)
+
     ## Replace the BG voxels in multiclass pred, that are FG in binary pred, with the closest multiclass label..
     pred_array_mul = replace_background_with_nearest_label(pred_array_mul, pred_array_bin)
 
     cleaned_arr = clean_small_components(pred_array_mul)  # Cleaning the small disconnected volumes
-    
+
     new_arr = np.zeros(cleaned_arr.shape)  # New array to store the modifications (bridges)
     for i in np.unique(cleaned_arr):
         binary_image = 1*(cleaned_arr==i)  # Dealing with 1 label class per time
         _, nums = label(binary_image)
 
         if nums > 1:  # If for that specific label, there are more than 1 component (thus, disconnexions)
-            dilated = link_components(binary_image, cleaned_arr)  # Link between the two closest points of the two closest components by dilating the line connecting them and multiply it by their class label
+            dilated = link_components(binary_image)  # Link between the two closest points of the two closest components by dilating the line connecting them and multiply it by their class label
             dilated_corrected = 1*( (dilated - 1*(cleaned_arr>0)) > 0)  # Get only the extra voxels to not interfere with what was originally there..
             dilated_corrected = i*( (dilated_corrected - 1*(new_arr>0)) > 0)  # Get only the extra voxels to not interfere with what was previously dilated from other accumulated labels...
             new_arr += (dilated_corrected.astype(np.uint8))

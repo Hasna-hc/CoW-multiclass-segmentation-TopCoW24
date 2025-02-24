@@ -9,6 +9,9 @@ evals/*
 /to_delete
 /to_delete/*
 
+/hidden_folders
+/hidden_folders/*
+
 Dataset101_Mulseg/
 Dataset102_Binseg/
 
